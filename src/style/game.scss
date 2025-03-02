@@ -1,0 +1,26 @@
+.game-container {
+	padding: 5px;
+	content: '';
+	background-color: red;
+
+	margin: 0 auto;
+
+	width: 500px;
+	height: 500px;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.game-line {
+	height: 30%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.game-field {
+	background-color: yellow;
+	width: 30%;
+}
