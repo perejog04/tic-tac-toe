@@ -2,6 +2,8 @@ import { useState } from 'react';
 import '../style/style.scss';
 
 function App() {
+	const [winner, setWinner] = useState<string | null>(null);
+
 	function handleClick(fieldNumber: number) {
 		let array = [...game];
 		if (array[fieldNumber] === null) {
@@ -21,9 +23,10 @@ function App() {
 				(array[2] === 'X' && array[5] === 'X' && array[8] === 'X') || // Правая вертикаль
 				(array[0] === 'X' && array[4] === 'X' && array[8] === 'X') || // Главная диагональ
 				(array[2] === 'X' && array[4] === 'X' && array[6] === 'X') // Побочная диагональ
-			)
+			) {
 				console.log('X wins!');
-			else if (
+				setWinner('X');
+			} else if (
 				(array[0] === 'O' && array[1] === 'O' && array[2] === 'O') ||
 				(array[3] === 'O' && array[4] === 'O' && array[5] === 'O') ||
 				(array[6] === 'O' && array[7] === 'O' && array[8] === 'O') ||
@@ -32,10 +35,18 @@ function App() {
 				(array[2] === 'O' && array[5] === 'O' && array[8] === 'O') ||
 				(array[0] === 'O' && array[4] === 'O' && array[8] === 'O') ||
 				(array[2] === 'O' && array[4] === 'O' && array[6] === 'O')
-			)
+			) {
 				console.log('Победа O!');
+				setWinner('O');
+			}
 			setGame(array);
 		}
+	}
+
+	function restartGame() {
+		setGame(Array(9).fill(null));
+		setCross(true);
+		setWinner(null);
 	}
 
 	const [game, setGame] = useState<(string | null)[]>([
@@ -57,6 +68,14 @@ function App() {
 				<h1>TicTacToe</h1>
 			</header>
 			<main>
+				{winner && (
+					<div className='modal'>
+						<div className='modal-content'>
+							<p>Победил {winner}!</p>
+							<button onClick={restartGame}>Начать заново</button>
+						</div>
+					</div>
+				)}
 				<div className='page'>
 					<div className='main'>
 						<div className='container'>
@@ -75,6 +94,7 @@ function App() {
 									</div>
 								))}
 							</div>
+							<h2>Ход: {cross ? 'X' : 'O'}</h2>
 						</div>
 					</div>
 				</div>
